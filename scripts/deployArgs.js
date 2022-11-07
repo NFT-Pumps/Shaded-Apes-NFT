@@ -4,8 +4,8 @@ module.exports = [
  
     '0x9C3f261e2cc4C88DfaC56A5B46cdbf767eE2f231',
     '0xc01aC67ba14F13Af4fCD5b4ba3784F39a703cda0',
-    'https://public-ipfs.s3.us-east-2.amazonaws.com/RockinKittenNFT/json/',
-    'https://public-ipfs.s3.us-east-2.amazonaws.com/RockinKittenNFT/assets/rs.json',
+    'https://public-ipfs.s3.us-east-2.amazonaws.com/ShadedApesNFT/json/',
+    'https://public-ipfs.s3.us-east-2.amazonaws.com/ShadedApesNFT/assets/rs.json',
 
     [
         ethers.utils.getAddress('0xdb0B9afA62332E08d049bD5975027fF7Ffafe31a'),
