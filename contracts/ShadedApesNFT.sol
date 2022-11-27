@@ -31,12 +31,12 @@ contract ShadedApesNFT is Ownable, ERC721, ERC721URIStorage, PaymentSplitter {
     Counters.Counter private _tokenSupply;
     Counters.Counter private _freeSupply;
 
-    uint256 public constant MAX_TOKENS = 555;
+    uint256 public constant MAX_TOKENS = 10000;
     uint256 public publicMintMaxLimit = 50;
     uint256 public whitelistMintMaxLimit = 50;
-    uint256 public tokenPrice = 0.007 ether;
+    uint256 public tokenPrice = 0.025 ether;
     uint256 public whitelistTokenPrice = 0.0 ether;
-    uint256 public maxWhitelistPassMints = 300;
+    uint256 public maxWhitelistPassMints = 10000;
 
     bool public publicMintIsOpen = false;
     bool public privateMintIsOpen = true;
