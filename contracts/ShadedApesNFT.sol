@@ -36,10 +36,11 @@ contract ShadedApesNFT is Ownable, ERC721, ERC721URIStorage, PaymentSplitter {
     uint256 public whitelistMintMaxLimit = 50;
     uint256 public tokenPrice = 0.025 ether;
     uint256 public whitelistTokenPrice = 0.0 ether;
-    uint256 public maxWhitelistPassMints = 10000;
+    uint256 public maxWhitelistPassMints = 1000;
 
     bool public publicMintIsOpen = false;
-    bool public privateMintIsOpen = true;
+    bool public bogoMintIsOpen = false;
+    bool public privateMintIsOpen = false;
     bool public revealed = false;
 
     string _baseTokenURI;
@@ -51,7 +52,7 @@ contract ShadedApesNFT is Ownable, ERC721, ERC721URIStorage, PaymentSplitter {
 
     mapping(address => bool) whitelistedAddresses;
 
-    string public Author = "Diablo";
+    string public Author = "techoshi.eth";
     string public ProjectTeam = "nftpumps";
 
     struct WhitelistClaimPass {
@@ -155,6 +156,21 @@ contract ShadedApesNFT is Ownable, ERC721, ERC721URIStorage, PaymentSplitter {
         }
     }
 
+    function bogoMint(uint256 quantity) external payable {
+        
+        require(tokenPrice * quantity <= msg.value, "Not enough ether sent");
+        require(quantity <= publicMintMaxLimit, "Mint amount too large");
+        quantity = quantity * 2;        
+        uint256 supply = _tokenSupply.current();
+        require(bogoMintIsOpen == true, "Bogo Mint Closed");        
+        require(quantity + (supply-1) <= MAX_TOKENS, "Not enough tokens remaining");
+
+        for (uint256 i = 0; i < quantity; i++) {
+            _tokenSupply.increment();
+            _safeMint(msg.sender, supply + i);
+        }
+    }
+
     function teamMint(address to, uint256 amount) external onlyOwner {
         uint256 supply = _tokenSupply.current();
         require((supply-1) + amount <= MAX_TOKENS, "Not enough tokens remaining");
@@ -170,7 +186,8 @@ contract ShadedApesNFT is Ownable, ERC721, ERC721URIStorage, PaymentSplitter {
         uint256 setOpenMintLimit,
         uint256 setWhistlistPassMintLimit,
         bool setPublicMintState,
-        bool setPrivateMintState
+        bool setPrivateMintState,
+        bool setBogoMintState
     ) external onlyOwner {
         whitelistTokenPrice = newWhitelistTokenPrice;
         tokenPrice = newPrice;
@@ -178,6 +195,7 @@ contract ShadedApesNFT is Ownable, ERC721, ERC721URIStorage, PaymentSplitter {
         whitelistMintMaxLimit = setWhistlistPassMintLimit;
         publicMintIsOpen = setPublicMintState;
         privateMintIsOpen = setPrivateMintState;
+        bogoMintIsOpen = setBogoMintState;
     }
 
     function setTransactionMintLimit(uint256 newMintLimit) external onlyOwner {
@@ -198,6 +216,10 @@ contract ShadedApesNFT is Ownable, ERC721, ERC721URIStorage, PaymentSplitter {
     function setFreeMints(uint256 amount) external onlyOwner {
         require(amount <= MAX_TOKENS, "Free mint amount too large");
         maxWhitelistPassMints = amount;
+    }
+
+    function toggleBogoMint() external onlyOwner {
+        bogoMintIsOpen = !bogoMintIsOpen;
     }
 
     function togglePublicMint() external onlyOwner {

@@ -154,10 +154,10 @@ if (true == true)
             it("Mints a presale token from Dapp", async function () {
 
                 const PurchaseArray = [
-                    { amount: 1, value: "0.055" },
-                    { amount: 1, value: "0.055" },
-                    { amount: 1, value: "0.055" },
-                    { amount: 1, value: "0.055" }
+                    { amount: 1, value: "0.025" },
+                    { amount: 1, value: "0.025" },
+                    { amount: 1, value: "0.025" },
+                    { amount: 1, value: "0.025" }
                 ];
 
                 //Enable Mint Whitelist
@@ -203,7 +203,7 @@ it("Can't Mint with Claim off", async function () {
     await expect(currentToken.whitelistClaimMint(1, 1,
         whitelistClaimPass[0]
         , {
-            value: ethers.utils.parseEther("0.55")
+            value: ethers.utils.parseEther("0.25")
         })).to.be.revertedWith("Claim Mint Closed");
 });
 
@@ -214,7 +214,7 @@ it("Can't Mint with Public off", async function () {
 
     await expect(currentToken.openMint(1,
         {
-            value: ethers.utils.parseEther("0.55")
+            value: ethers.utils.parseEther("0.25")
         })).to.be.revertedWith("Public Mint Closed");
 });
 
@@ -227,7 +227,7 @@ it("Stops Mint of a presale token from Dapp due to Mint quantity can't be greate
     await expect(currentToken.whitelistClaimMint(2, 1,
         whitelistClaimPass[0]
         , {
-            value: ethers.utils.parseEther("0.55")
+            value: ethers.utils.parseEther("0.25")
         })).to.be.revertedWith("Mint quantity can't be greater than claimable");
 });
 
@@ -240,7 +240,7 @@ it("Stops Mint of a presale token from Dapp due to invalid Claim Amount", async 
     await expect(currentToken.whitelistClaimMint(1, 5,
         whitelistClaimPass[0]
         , {
-            value: ethers.utils.parseEther("0.55")
+            value: ethers.utils.parseEther("0.25")
         })).to.be.revertedWith("Invalid Pass");
 });
 
@@ -253,7 +253,7 @@ it("Stops Mint of a presale token from Dapp due to invalid Pass", async function
     await expect(currentToken.whitelistClaimMint(1, 5,
         whitelistClaimPass[1]
         , {
-            value: ethers.utils.parseEther("0.55")
+            value: ethers.utils.parseEther("0.25")
         })).to.be.revertedWith("Invalid Pass");
 });
 
